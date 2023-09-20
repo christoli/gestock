@@ -9,10 +9,11 @@ if (
     && !empty($_POST['prix_unitaire'])
     && !empty($_POST['date_fabrication'])
     && !empty($_POST['date_expiration'])
+    && !empty($_POST['id'])
 ) {
 
-    $sql = "INSERT INTO article(nom_article, categorie, quantite, prix_unitaire, date_fabrication, date_expiration)
-            VALUES(?, ?, ?, ?, ?, ?)";
+    $sql = "UPDATE article SET nom_article=?, categorie=?, quantite=?, prix_unitaire=?, date_fabrication=?, date_expiration=?
+            WHERE id=?";
 
     $req = $connexion->prepare($sql);
 
@@ -22,15 +23,16 @@ if (
         $_POST['quantite'],
         $_POST['prix_unitaire'],
         $_POST['date_fabrication'],
-        $_POST['date_expiration']
+        $_POST['date_expiration'],
+        $_POST['id']
     ));
 
     if ($req->rowCount() != 0) {
-        $_SESSION['message']['text'] = "Article ajoutée avec succès";
+        $_SESSION['message']['text'] = "Article modifié avec succès";
         $_SESSION['message']['type'] = "success";
     } else {
-        $_SESSION['message']['text'] = "Une erreur s'est produite lors de l'ajout de l'article";
-        $_SESSION['message']['type'] = "danger";
+        $_SESSION['message']['text'] = "Rien n'a été modifié";
+        $_SESSION['message']['type'] = "warning";
     }
 } else {
     $_SESSION['message']['text'] = "Une information obligatoire non renseignée";

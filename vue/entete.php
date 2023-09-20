@@ -1,3 +1,7 @@
+<?php
+session_start();
+include_once '../model/function.php';
+?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   <head>
