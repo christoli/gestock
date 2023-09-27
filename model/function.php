@@ -43,8 +43,8 @@ function getClient($id=null) {
 
 function getVente($id=null) {
     if (!empty($id)) {
-        $sql = "SELECT nom_article, nom, prenom, v.quantite, prix, date_vente
-                FROM client AS c, vente AS v, article AS a  WHERE v.id_article=a.id AND v.id_client=c.id AND id=?";
+        $sql = "SELECT nom_article, nom, prenom, v.quantite, prix, date_vente, v.id, prix_unitaire, adresse, telephone
+                FROM client AS c, vente AS v, article AS a  WHERE v.id_article=a.id AND v.id_client=c.id AND v.id=?";
 
         $req = $GLOBALS['connexion']->prepare($sql);
     

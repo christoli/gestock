@@ -3,97 +3,54 @@
 
     // Verifier si l'id de l'article est récupérer par url
     if (!empty($_GET['id'])) {
-        $article = getArticle($_GET['id']);
+        $vente = getVente($_GET['id']);
     }
 ?>
 
     <div class="home-content">
-        <div class="overview-boxes">
-            <div class="box">
-                <form action="<?= !empty($_GET['id']) ? "../model/modifVente.php" : "../model/ajoutVente.php" ?>" method="post">
 
-                    
-                    <input value= "<?= !empty($_GET['id'])? $article['id'] : "" ?>" type="hidden" name="id" id="id">
-                    
-                    <label for="article">Article</label>
-                    <select onchange="setPrix()" name="id_article" id="id_article">
-                        <?php 
-                            $articles = getArticle();
-                            if (!empty($articles) && is_array($articles)) {
-                                foreach ($articles as $key => $value) {
-                                    ?>
-                                    <option data-prix="<?=$value['prix_unitaire']?>" value="<?=$value['id']?>"><?=$value['nom_article']." - ".$value['quantite']." "."disponible" ?></option>
-                                    <?php
-                                }
-                            }
-                        ?>
-                    </select>
+        <button class="hidden-print" id="btnPrint" style="position: relative; left:45%;"><i class='bx bx-printer'></i> Imprimer</button>
 
-                    <label for="fullname_client">Client</label>
-                    <select name="id_client" id="fullname_client">
-                        <?php 
-                            $clients = getClient();
-                            if (!empty($clients) && is_array($clients)) {
-                                foreach ($clients as $key => $value) {
-                                    ?>
-                                    <option value="<?=$value['id']?>"><?=$value['nom']." ".$value['prenom']?></option>
-                                    <?php
-                                }
-                            }
-                        ?>
-                    </select>
-
-                    <label for="quantite">Quantité</label>
-                    <input onkeyup="setPrix()" value= "<?= !empty($_GET['id'])? $article['quantite'] : "" ?>" type="number" name="quantite" id="quantite" placeholder="Veuillez saisir la quantité">
-
-                    <label for="prix">Prix unitaire</label>
-                    <input value= "<?= !empty($_GET['id'])? $article['prix'] : "" ?>" type="text" name="prix" id="prix" placeholder="Veuillez saisir le prix">
-
-                    <button type="submit">Valider</button>
-
-                    <?php
-                        if(!empty($_SESSION['message']['text'])) {
-                    ?>
-                        <div class="alert <?=$_SESSION['message']['type']?>">
-                            <?= $_SESSION['message']['text']; ?>
-                        </div>
-                    <?php
-                        }
-                    ?>
-                </form>
+        <div class="page">
+            <div class="cote-a-cote">
+                <h2>D-CLIC Stock</h2>
+                <div>
+                    <p>Reçu N° #: <?=$vente['id']?></p>
+                    <p>Date: <?=date('d/m/y H:i:s', strtotime($vente['date_vente'])) ?> </p>
+                </div>
             </div>
-            <div class="box">
+            <div class="cote-a-cote" style="width:50%;">
+                    <p>Nom :</p>
+                    <p><?=$vente['nom'] . " " . $vente['prenom']?> </p>
+                </div>
+                <div class="cote-a-cote" style="width:50%;">
+                    <p>Tel :</p>
+                    <p><?=$vente['telephone']?> </p>
+                </div>
+                <div class="cote-a-cote" style="width:50%;">
+                    <p>Adresse :</p>
+                    <p><?=$vente['adresse']?></p>
+                </div>
+
+                <br>
+
                 <table class="mtable">
                     <tr>
-                        <th>Article</th>
-                        <th>Client</th>
+                        <th>Désignation</th>
                         <th>Quantité</th>
-                        <th>Prix</th>
-                        <th>Date</th>
-                        <th>Action</th>
+                        <th>Prix unitaire</th>
+                        <th>Prix total</th>
                     </tr>
-                    <?php 
-                        $vente = getVente();
-
-                        if(!empty($vente) && is_array($vente)) {
-                            foreach( $vente as $key => $value) {
-                    ?>
-                                <tr>
-                                    <td><?=$value['nom_article'] ?></td>
-                                    <td><?=$value['nom']." ".$value['prenom'] ?></td>
-                                    <td><?=$value['quantite'] ?></td>
-                                    <td><?=$value['prix'] ?></td>
-                                    <td><?=date('d/m/y H:i:s', strtotime($value['date_vente'])) ?></td>
-                                    <td><a href="recuVente.php?id=<?=$value['id'] ?>"><i class='bx bx-receipt'></i></a></td>
-                                </tr>
-                    <?php
-                            }
-                        }
-                    ?>
+                    <tr>
+                        <td><?=$vente['nom_article'] ?></td>
+                        <td><?=$vente['quantite'] ?></td>
+                        <td><?=$vente['prix_unitaire'] ?></td>
+                        <td><?=$vente['prix'] ?></td>
+                    </tr>
                 </table>
             </div>
         </div>
-    </div>
+
     </section>
 
 <?php
@@ -101,6 +58,11 @@
 ?>
 
 <script>
+
+    let btnPrint = document.querySelector('#btnPrint');
+    btnPrint.addEventListener("click", () => {
+        window.print();
+    });
 
     function setPrix() {
        let article = document.querySelector('#id_article');

@@ -16,7 +16,7 @@ include_once '../model/function.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <div class="sidebar">
+    <div class="sidebar hidden-print">
       <div class="logo-details">
         <i class="bx bxl-c-plus-plus"></i>
         <span class="logo_name">D-CLIC</span>
@@ -103,7 +103,7 @@ include_once '../model/function.php';
       </ul>
     </div>
     <section class="home-section">
-      <nav>
+      <nav class="hidden-print">
         <div class="sidebar-button">
           <i class="bx bx-menu sidebarBtn"></i>
           <span class="dashboard">Dashboard</span>
