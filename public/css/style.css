@@ -448,6 +448,62 @@ ol.mtable li:nth-child(even) {
   background: #f2f2f2;
 }
 
+/* Reçu */
+
+.cote-a-cote {
+  display: flex; justify-content: space-between;
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm;
+  margin: 10mm auto;
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.subpage {
+  padding: 1cm;
+  border: 5px red solid;
+  height: 257mm;
+  outline: 2cm #ffeaea;
+}
+
+@media print {
+  .hidden-print,
+  .hidden-print * {
+    display: none !important;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+@media print {
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+  }
+  .hidden-print,
+  .hidden-print * {
+    display: none !important;
+  }
+  .page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+    page-break-after: always;
+  }
+}
+
 
 
 /* Responsive Media Query */
