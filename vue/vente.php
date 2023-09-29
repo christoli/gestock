@@ -84,7 +84,10 @@
                                     <td><?=$value['quantite'] ?></td>
                                     <td><?=$value['prix'] ?></td>
                                     <td><?=date('d/m/y H:i:s', strtotime($value['date_vente'])) ?></td>
-                                    <td><a href="recuVente.php?id=<?=$value['id'] ?>"><i class='bx bx-receipt'></i></a></td>
+                                    <td>
+                                        <a href="recuVente.php?id=<?=$value['id'] ?>"><i class='bx bx-receipt'></i></a>
+                                        <a onclick="annuleVente(<?=$value['id'] ?>, <?=$value['idArticle'] ?>, <?=$value['quantite'] ?>)" style="color:red"><i class='bx bx-stop-circle'></i></a>
+                                    </td>
                                 </tr>
                     <?php
                             }
@@ -101,6 +104,12 @@
 ?>
 
 <script>
+
+    function annuleVente(idVente, idArticle, quantite) {
+        if (confirm("Voulez-vous vraiment annuler cette vente?")) {
+            window.location.href = "../model/annuleVente.php?idVente="+idVente+"&idArticle="+idArticle+"&quantite="+quantite;
+        }
+    }
 
     function setPrix() {
        let article = document.querySelector('#id_article');

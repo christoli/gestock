@@ -47,6 +47,12 @@ include_once '../model/function.php';
           </a>
         </li>
         <li>
+          <a href="fournisseur.php">
+            <i class="bx bx-user"></i>
+            <span class="links_name">Fournisseur</span>
+          </a>
+        </li>
+        <li>
           <a href="#">
             <i class="bx bx-list-ul"></i>
             <span class="links_name">Commandes</span>
