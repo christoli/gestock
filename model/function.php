@@ -43,8 +43,8 @@ function getClient($id=null) {
 
 function getVente($id=null) {
     if (!empty($id)) {
-        $sql = "SELECT nom_article, nom, prenom, v.quantite, prix, date_vente, v.id, prix_unitaire, adresse, telephone
-                FROM client AS c, vente AS v, article AS a  WHERE v.id_article=a.id AND v.id_client=c.id AND v.id=? AND etat=?";
+        $sql = "SELECT nom_article, nom, prenom, v.quantite, prix, date_vente, c.id, prix_unitaire, adresse, telephone
+                FROM client AS c, vente AS v, article AS a  WHERE v.id_article=a.id AND v.id_client=c.id AND c.id=? AND etat=?";
 
         $req = $GLOBALS['connexion']->prepare($sql);
     
@@ -80,6 +80,29 @@ function getFournisseur($id=null) {
             $req = $GLOBALS['connexion']->prepare($sql);
         
             $req->execute();
+        
+            return $req->fetchAll();
+    }
+}
+
+
+function getCommande($id=null) {
+    if (!empty($id)) {
+        $sql = "SELECT nom_article, nom, prenom, co.quantite, prix, date_commande, co.id, prix_unitaire, adresse, telephone
+                FROM fournisseur AS f, commande AS co, article AS a  WHERE co.id_article=a.id AND co.id_fournisseur=f.id AND co.id=?";
+
+        $req = $GLOBALS['connexion']->prepare($sql);
+    
+        $req->execute(array($id,1));
+    
+        return $req->fetch();
+    } else {
+            $sql = "SELECT nom_article, nom, prenom, co.quantite, prix, date_commande, co.id, a.id AS idArticle
+                    FROM fournisseur AS f, commande AS co, article AS a  WHERE co.id_article=a.id AND co.id_fournisseur=f.id";
+
+            $req = $GLOBALS['connexion']->prepare($sql);
+        
+            $req->execute(array(1));
         
             return $req->fetchAll();
     }
